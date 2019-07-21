@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--配置要自动扫描的包-->
+    <context:component-scan base-package="com.cwh.springmvc"></context:component-scan>
+
+
+    <!--配置视图解析器：如何把hander 方法返回值解析为实际的物理视图-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--配置 BeanNameViewResolver 视图解析器：使用视图的名称来解析视图-->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="100"></property>
+    </bean>
+
+
+    <!--配置国际化资源文件-->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="i18n"></property>
+    </bean>
+
+    <!--配置直接转发的页面-->
+    <!--可以直接相应的转发页面，而无需再经过Handler 的方法-->
+    <mvc:view-controller path="/success" view-name="success"/>
+
+    <mvc:default-servlet-handler />
+    <mvc:resources mapping="/js/**" location="/js/"></mvc:resources>
+
+    <!--在实际开发中通常都需配置mvc：annotation-driven 标签-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+</beans>
